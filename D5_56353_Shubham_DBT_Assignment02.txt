@@ -1,0 +1,770 @@
+1. Create 'classwork' database. Import classwork-db.sql.
+
+Create 'hr' database. Import hr-db.sql.
+C:/Users/shubh>mysql -u root -p
+Enter password: ********
+
+
+root>CREATE DATABASE hr;
+
+root>GRANT ALL PRIVILEGES ON classwork. * TO d5_56353@localhost;
+
+
+root>FLUSH PRIVILEGES;
+
+
+root>exit
+
+d5_56353>SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| classwork          |
+| hr                 |
+| information_schema |
+| spj                |
++--------------------+
+
+d5_56353>USE classwork;
+Database changed
+d5_56353>SOURCE D:/CDAC/PG-DAC/DBMS/dbt/db/classwork-db.sql
+
+
+Database changed
+d5_56353>SHOW TABLES;
++---------------------+
+| Tables_in_classwork |
++---------------------+
+| bonus               |
+| books               |
+| dept                |
+| dummy               |
+| emp                 |
+| salgrade            |
+| stud                |
+| temp                |
++---------------------+
+
+
+
+
+2. Create 'hr' database. Import hr-db.sql.
+C:/Users/shubh>mysql -u root -p
+Enter password: ********
+
+
+root>CREATE DATABASE hr;
+
+
+root>GRANT ALL PRIVILEGES ON hr. * TO d5_56353@localhost;
+
+
+root>FLUSH PRIVILEGES;
+
+
+root>exit
+
+
+C:/Users/shubh>mysql -u d5_56353 -p
+Enter password: ********
+
+
+d5_56353>SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| classwork          |
+| hr                 |
+| information_schema |
+| spj                |
++--------------------+
+
+
+d5_56353>USE hr;
+Database changed
+d5_56353>SOURCE D:/CDAC/PG-DAC/DBMS/dbt/db/hr-db.sql;
+
+d5_56353>SHOW TABLES;
++--------------+
+| Tables_in_hr |
++--------------+
+| countries    |
+| departments  |
+| employees    |
+| job_history  |
+| jobs         |
+| locations    |
+| regions      |
++--------------+
+
+
+
+3. Create 'sales' database. Import sales-db.sql.
+
+root>CREATE DATABASE sales;
+
+
+root>GRANT ALL PRIVILEGES ON sales. * TO d5_56353@localhost;
+
+
+root>FLUSH PRIVILEGES;
+
+d5_56353>USE sales;
+Database changed
+
+d5_56353>SOURCE D:/CDAC/PG-DAC/DBMS/dbt/db/sales-db.sql;
+
+
+d5_56353>SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| classwork          |
+| hr                 |
+| information_schema |
+| sales              |
+| spj                |
++--------------------+
+
+
+d5_56353>SHOW TABLES;
++-----------------+
+| Tables_in_sales |
++-----------------+
+| customers       |
+| orders          |
+| salespeople     |
++-----------------+
+
+
+
+
+4. Create 'northwind' database. Import northwind-db.sql.
+
+root>CREATE DATABASE sales;
+
+
+root>GRANT ALL PRIVILEGES ON northwind. * TO d5_56353@localhost;
+
+
+root>FLUSH PRIVILEGES;
+
+d5_56353>SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| classwork          |
+| hr                 |
+| information_schema |
+| northwind          |
+| sales              |
+| spj                |
++--------------------+
+
+d5_56353>USE northwind;
+Database changed
+
+d5_56353>SOURCE D:/CDAC/PG-DAC/DBMS/dbt/db/northwind-db.sql;
+
+d5_56353>SHOW TABLES;
++----------------------+
+| Tables_in_northwind  |
++----------------------+
+| categories           |
+| customercustomerdemo |
+| customerdemographics |
+| customers            |
+| employees            |
+| employeeterritories  |
+| orderdetails         |
+| orders               |
+| products             |
+| region               |
+| shippers             |
+| suppliers            |
+| territories          |
++----------------------+
+
+
+
+5. List all tables in classwork database. Display contents of all tables (one by one).
+Ans->
+
+d5_56353>USE classwork;
+Database changed
+d5_56353>SHOW TABLES;
++---------------------+
+| Tables_in_classwork |
++---------------------+
+| bonus               |
+| books               |
+| dept                |
+| dummy               |
+| emp                 |
+| salgrade            |
+| stud                |
+| temp                |
++---------------------+
+
+
+d5_56353>DESCRIBE bonus;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ename | varchar(40) | YES  |     | NULL    |       |
+| job   | varchar(40) | YES  |     | NULL    |       |
+| sal   | int         | YES  |     | NULL    |       |
+| comm  | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+
+d5_56353>DESCRIBE books;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   | PRI | NULL    |       |
+| name    | varchar(50) | YES  |     | NULL    |       |
+| author  | varchar(50) | YES  |     | NULL    |       |
+| subject | varchar(50) | YES  |     | NULL    |       |
+| price   | float(7,3)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+
+d5_56353>DESCRIBE dept;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| deptno | int         | YES  |     | NULL    |       |
+| dname  | varchar(40) | YES  |     | NULL    |       |
+| loc    | varchar(40) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+d5_56353>DESCRIBE dummy;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| dummy | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+
+d5_56353>DESCRIBE emp;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| empno  | int          | YES  |     | NULL    |       |
+| ename  | varchar(40)  | YES  |     | NULL    |       |
+| job    | varchar(40)  | YES  |     | NULL    |       |
+| mgr    | int          | YES  |     | NULL    |       |
+| hire   | date         | YES  |     | NULL    |       |
+| sal    | decimal(8,2) | YES  |     | NULL    |       |
+| comm   | decimal(8,2) | YES  |     | NULL    |       |
+| deptno | int          | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+
+
+d5_56353>DESCRIBE salgrade;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| grade | int  | YES  |     | NULL    |       |
+| losal | int  | YES  |     | NULL    |       |
+| hisal | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+
+
+d5_56353>DESCRIBE stud;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| id    | int      | YES  |     | NULL    |       |
+| name  | char(20) | YES  |     | NULL    |       |
+| marks | double   | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+
+
+d5_56353>DESCRIBE temp;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| c1    | char(4)    | YES  |     | NULL    |       |
+| c2    | varchar(4) | YES  |     | NULL    |       |
+| c3    | tinytext   | YES  |     | NULL    |       |
++-------+------------+------+-----+---------+-------+
+
+
+
+
+6. List all tables in sales database. Display contents of all tables (one by one).
+
+
+d5_56353>USE sales;
+Database changed
+d5_56353>SHOW TABLES;
++-----------------+
+| Tables_in_sales |
++-----------------+
+| customers       |
+| orders          |
+| salespeople     |
++-----------------+
+
+
+d5_56353>DESCRIBE customers;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cnum   | int         | YES  |     | NULL    |       |
+| cname  | varchar(10) | YES  |     | NULL    |       |
+| city   | varchar(10) | YES  |     | NULL    |       |
+| rating | int         | YES  |     | NULL    |       |
+| snum   | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+
+
+d5_56353>DESCRIBE orders;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| onum  | int          | YES  |     | NULL    |       |
+| amt   | decimal(7,2) | YES  |     | NULL    |       |
+| odate | date         | YES  |     | NULL    |       |
+| cnum  | int          | YES  |     | NULL    |       |
+| snum  | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+
+
+d5_56353>DESCRIBE salespeople;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| snum  | int          | YES  |     | NULL    |       |
+| sname | varchar(10)  | YES  |     | NULL    |       |
+| city  | varchar(10)  | YES  |     | NULL    |       |
+| comm  | decimal(3,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+
+
+
+7. Login with your user name (d1_12345). List all tables in sales database. Display 
+contents of all tables (one by one). Answer the following questions (by observations 
+only – not queries).
+
+C:\Users\shubh>mysql -u d5_56353 -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+
+a. How many orders data is present in the database?
+ans- 10;
+
+d5_56353>SELECT * FROM orders;
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-04 | 2006 | 1001 |
+| 3010 |  309.95 | 1990-10-04 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-04 | 2006 | 1001 |
++------+---------+------------+------+------+
+
+
+b. How many customers are present in the database?
+ans- 7
+
+d5_56353>SELECT * FROM customers;
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
++------+----------+----------+--------+------+
+
+c. How many salespeople are present in the database?
+ans- 5
+
+
+d5_56353>SELECT * FROM salespeople;
++------+---------+-----------+------+
+| snum | sname   | city      | comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+
+d. On which date order with highest amount is placed?
+ans- 1990-10-04
+
+
+e. For which order salesman got maximum commission? Hint: you need to refer data 
+of two tables.
+
+ans- for order number:3001
+
+f. Which salesman are handling more than two customers? Hint: you need to refer 
+data of two tables.
+
+ans- no one;
+
+g. Which city have single customer?
+
+ans- Berlin
+
+h. Which city have multiple salespeople?
+
+ans-  London
+
+
+i. What is name of customer and salesman of the maximum amount order?
+ans- customer name: Clemens, salesman: Peel
+
+
+8. Study relationship between the tables in sales database.
+
+
+9. Write a select command that produces the order number, amount, and date for all 
+rows in the Orders table.
+
+d5_56353>SELECT onum,amt,odate FROM orders;
++------+---------+------------+
+| onum | amt     | odate      |
++------+---------+------------+
+| 3001 |   18.69 | 1990-10-03 |
+| 3003 |  767.19 | 1990-10-03 |
+| 3002 | 1900.10 | 1990-10-03 |
+| 3005 | 5160.45 | 1990-10-03 |
+| 3006 | 1098.16 | 1990-10-03 |
+| 3009 | 1713.23 | 1990-10-04 |
+| 3007 |   75.75 | 1990-10-04 |
+| 3008 | 4723.00 | 1990-10-04 |
+| 3010 |  309.95 | 1990-10-04 |
+| 3011 | 9891.88 | 1990-10-04 |
++------+---------+------------+
+
+
+
+10.Write a query that displays the Salespeople table with the columns in the following order: city, sname, snum, comm.
+
+d5_56353>SELECT city,sname,snum,comm FROM salespeople;
++-----------+---------+------+------+
+| city      | sname   | snum | comm |
++-----------+---------+------+------+
+| London    | Peel    | 1001 | 0.12 |
+| San Jose  | Serres  | 1002 | 0.13 |
+| London    | Motika  | 1004 | 0.11 |
+| Barcelona | Rifkin  | 1007 | 0.15 |
+| New York  | Axelrod | 1003 | 0.10 |
++-----------+---------+------+------+
+
+
+11.Write a query that produces all rows from the Customers table for which the 
+salesperson’s number is 1001.
+
+d5_56353>SELECT * FROM customers WHERE snum=1001;
++------+---------+--------+--------+------+
+| cnum | cname   | city   | rating | snum |
++------+---------+--------+--------+------+
+| 2001 | Hoffman | London |    100 | 1001 |
+| 2006 | Clemens | London |    100 | 1001 |
++------+---------+--------+--------+------+
+
+
+12.Write a select command that produces the rating followed by the name of each 
+customer in San Jose.
+
+d5_56353>SELECT rating,cname FROM customers WHERE city='san Jose';
++--------+----------+
+| rating | cname    |
++--------+----------+
+|    200 | Liu      |
+|    300 | Cisneros |
++--------+----------+
+
+
+13.Write a query that will produce the snum values of all salespeople from the Orders 
+
+d5_56353>SELECT snum FROM orders;
++------+
+| snum |
++------+
+| 1007 |
+| 1001 |
+| 1004 |
+| 1002 |
+| 1007 |
+| 1003 |
+| 1002 |
+| 1001 |
+| 1002 |
+| 1001 |
++------+
+
+table (with the duplicate values suppressed).
+
+d5_56353>SELECT DISTINCT snum FROM orders;
++------+
+| snum |
++------+
+| 1007 |
+| 1001 |
+| 1004 |
+| 1002 |
+| 1003 |
++------+
+
+14.Write a query that will give you all orders for more than Rs. 1,000.
+
+d5_56353>SELECT * FROM orders WHERE amt>1000;
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-04 | 2006 | 1001 |
+| 3011 | 9891.88 | 1990-10-04 | 2006 | 1001 |
++------+---------+------------+------+------+
+
+15.Write a query that will give you the names and cities of all salespeople in London 
+with a commission above 0.10.
+
+
+d5_56353>SELECT sname,city FROM salespeople WHERE city='london' AND comm>0.10 ;
++--------+--------+
+| sname  | city   |
++--------+--------+
+| Peel   | London |
+| Motika | London |
++--------+--------+
+
+16.Write a query on the Customers table whose output will exclude all customers with 
+a rating <= 100, unless they are located in Rome.
+
+d5_56353>SELECT * FROM customers WHERE rating>100 OR city='Rome';
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
++------+----------+----------+--------+------+
+
+
+17.Write a query that selects all orders except those with zeroes or NULLs in the amt field
+
+
+d5_56353>SELECT * FROM orders WHERE amt!=0 OR amt IS NOT NULL;
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-04 | 2006 | 1001 |
+| 3010 |  309.95 | 1990-10-04 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-04 | 2006 | 1001 |
++------+---------+------------+------+------+
+
+
+18.Display all the data from the S table.
+
+d5_56353>SELECT * FROM s;
++------+-------+--------+--------+
+| S#   | Sname | Status | City   |
++------+-------+--------+--------+
+| S1   | Smith |     20 | London |
+| S2   | Jones |     10 | Paris  |
+| S3   | Blake |     30 | Paris  |
+| S4   | Clark |     30 | London |
+| S5   | Adams |     30 | Athens |
++------+-------+--------+--------+
+
+
+19.Display only the S# and SNAME fields from the S table.
+
+d5_56353>SELECT `s#`,sname FROM s;
++------+-------+
+| s#   | sname |
++------+-------+
+| S1   | Smith |
+| S2   | Jones |
+| S3   | Blake |
+| S4   | Clark |
+| S5   | Adams |
++------+-------+
+
+
+20.Assuming that the Part Weight is in GRAMS, display the same in MILLIGRAMS and 
+KILOGRAMS.
+
+d5_56353>SELECT Weight AS grams,Weight*1000 AS MILLIGRAMS,Weight/1000 AS KILOGRAMS FROM p;
++-------+------------+-----------+
+| grams | MILLIGRAMS | KILOGRAMS |
++-------+------------+-----------+
+|    12 |      12000 |    0.0120 |
+|    17 |      17000 |    0.0170 |
+|    17 |      17000 |    0.0170 |
+|    14 |      14000 |    0.0140 |
+|    12 |      12000 |    0.0120 |
+|    19 |      19000 |    0.0190 |
++-------+------------+-----------+
+
+21.Display the PNAME and COLOR from the P table for the CITY=”London”
+
+d5_56353>SELECT Pname,Color FROM p WHERE city='London';
++-------+-------+
+| Pname | Color |
++-------+-------+
+| Nut   | Red   |
+| Screw | Red   |
+| Cog   | Red   |
++-------+-------+
+
+22.Display all the Suppliers from London.
+
+d5_56353>SELECT Sname FROM s WHERE city='london';
++-------+
+| Sname |
++-------+
+| Smith |
+| Clark |
++-------+
+
+
+23.Display all the Suppliers from Paris or Athens.
+
+d5_56353>SELECT Sname FROM s WHERE city='Paris' OR city='Athens';
++-------+
+| Sname |
++-------+
+| Jones |
+| Blake |
+| Adams |
++-------+
+
+
+24.Display all the Projects in Athens.
+
+d5_56353>SELECT Jname FROM j WHERE city='Athens';
++---------+
+| Jname   |
++---------+
+| Reader  |
+| Console |
++---------+
+
+25.Display all the Part names with the weight between 12 and 14 (inclusive of both).
+
+d5_56353>SELECT pname FROM p WHERE Weight>=12 AND Weight<=14;
++-------+
+| pname |
++-------+
+| Nut   |
+| Screw |
+| Cam   |
++-------+
+
+
+26.Display all the Suppliers with a Status greater than or equal to 20.
+
+d5_56353>SELECT Sname  FROM s WHERE Status>=20;
++-------+
+| Sname |
++-------+
+| Smith |
+| Blake |
+| Clark |
+| Adams |
++-------+
+
+27.Display all the Suppliers except the Suppliers from London
+
+d5_56353>SELECT Sname  FROM s WHERE city!='London';
++-------+
+| Sname |
++-------+
+| Jones |
+| Blake |
+| Adams |
++-------+
+
+28.Display only the Cities from where the Suppliers come from.
+
+d5_56353>SELECT city  FROM s;
++--------+
+| city   |
++--------+
+| London |
+| Paris  |
+| Paris  |
+| London |
+| Athens |
++--------+
+
+29.Display the Supplier table in the descending order of CITY.
+
+d5_56353>SELECT *  FROM s ORDER BY City DESC;
++------+-------+--------+--------+
+| S#   | Sname | Status | City   |
++------+-------+--------+--------+
+| S2   | Jones |     10 | Paris  |
+| S3   | Blake |     30 | Paris  |
+| S1   | Smith |     20 | London |
+| S4   | Clark |     30 | London |
+| S5   | Adams |     30 | Athens |
++------+-------+--------+--------+
+
+
+30.Display the Part Table in the ascending order of CITY and within the city in the 
+ascending order of Part names.
+
+d5_56353>SELECT * FROM p ORDER BY City ASC, Pname ASC;
++------+-------+-------+--------+--------+
+| P#   | Pname | Color | Weight | City   |
++------+-------+-------+--------+--------+
+| P6   | Cog   | Red   |     19 | London |
+| P1   | Nut   | Red   |     12 | London |
+| P4   | Screw | Red   |     14 | London |
+| P2   | Bolt  | Green |     17 | Paris  |
+| P5   | Cam   | Blue  |     12 | Paris  |
+| P3   | Screw | Blue  |     17 | Rome   |
++------+-------+-------+--------+--------+
+
+31.Display all the Suppliers with a status between 10 and 20.
+THERE is NOT ANY Suplier WHOS STATUS IS BETWEEN 10 AND 20,
+
+Empty set 
+
+
+
+32.Display all the Parts and their Weight, which are not in the range of 10 and 15.
+
+
+d5_56353>SELECT Pname,Weight FROM p WHERE NOT (Weight>=10 AND Weight<=15);
++-------+--------+
+| Pname | Weight |
++-------+--------+
+| Bolt  |     17 |
+| Screw |     17 |
+| Cog   |     19 |
++-------+--------+

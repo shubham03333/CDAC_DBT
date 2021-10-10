@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;ArrOfOjects&apos; to &apos;ArrOfObjects&apos;&#x0D;&#x0A;- Original project: &apos;ARRAOFOBJECTS&apos;&#x0D;&#x0A;- Original element: &apos;ArrOfOjects&apos;&#x0D;&#x0A;- Renamed element: &apos;ArrOfObjects&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ArrOfOjects&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{ArrOfOjects.java[ArrOfOjects" matchStrategy="1" name="ArrOfObjects" qualified="false" references="true" similarDeclarations="false" stamp="1633630292911" textual="false" version="1.0"/>
+</session>

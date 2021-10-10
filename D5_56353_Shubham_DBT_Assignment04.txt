@@ -1,0 +1,631 @@
+1. Write a query that counts all orders for October 3.
+
+d5_56353>SELECT * FROM orders;
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-04 | 2006 | 1001 |
+| 3010 |  309.95 | 1990-10-04 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-04 | 2006 | 1001 |
++------+---------+------------+------+------+
+10 rows in set (0.02 sec)
+
+d5_56353>SELECT * FROM orders WHERE odate='1990-10-03';
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
++------+---------+------------+------+------+
+5 rows in set (0.00 sec)
+
+
+2. Write a query that counts the number of different non-NULL city values in the Customers
+table.
+
+d5_56353>SELECT * FROM customers;
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.01 sec)
+
+d5_56353>SELECT count(city) FROM customers;
++-------------+
+| count(city) |
++-------------+
+|           7 |
++-------------+
+1 row in set (0.00 sec)
+
+
+3. Find average commission of salespeople in London.
+
+
+
+d5_56353>SELECT * FROM salespeople;
++------+---------+-----------+------+
+| snum | sname   | city      | comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.01 sec)
+
+d5_56353>SELECT AVG(comm) FROM salespeople WHERE city IN('london');
++-----------+
+| AVG(comm) |
++-----------+
+|  0.115000 |
++-----------+
+1 row in set (0.00 sec)
+
+
+4. Extract cnum, cname and city from customer table if and only if one or more of the customers in the table are located in San Jose.
+
+
+d5_56353>SELECT * FROM customers;
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.00 sec)
+
+d5_56353>SELECT cnum,cname,city FROM customers WHERE city= 'San jose';
++------+----------+----------+
+| cnum | cname    | city     |
++------+----------+----------+
+| 2003 | Liu      | San Jose |
+| 2008 | Cisneros | San Jose |
++------+----------+----------+
+2 rows in set (0.00 sec)
+
+
+5. Display all the Suppliers, belonging to cities starting with the letter ‘L’.
+
+
+
+d5_56353>SELECT * FROM s;
++------+-------+--------+--------+
+| S#   | Sname | Status | City   |
++------+-------+--------+--------+
+| S1   | Smith |     20 | London |
+| S2   | Jones |     10 | Paris  |
+| S3   | Blake |     30 | Paris  |
+| S4   | Clark |     30 | London |
+| S5   | Adams |     30 | Athens |
++------+-------+--------+--------+
+5 rows in set (0.01 sec)
+
+d5_56353>SELECT * FROM s WHERE city LIKE 'L%';
++------+-------+--------+--------+
+| S#   | Sname | Status | City   |
++------+-------+--------+--------+
+| S1   | Smith |     20 | London |
+| S4   | Clark |     30 | London |
++------+-------+--------+--------+
+2 rows in set (0.00 sec)
+
+
+6. Display all the Projects, with the third letter in JNAME as ‘n’
+
+
+
+d5_56353>SELECT * FROM j;
++------+----------+--------+
+| J#   | Jname    | City   |
++------+----------+--------+
+| J1   | Sorter   | Paris  |
+| J2   | Punch    | Rome   |
+| J3   | Reader   | Athens |
+| J4   | Console  | Athens |
+| J5   | Collator | London |
+| J6   | Terminal | Oslo   |
+| J7   | Tape     | London |
++------+----------+--------+
+7 rows in set (0.01 sec)
+
+d5_56353>SELECT * FROM j WHERE jname LIKE '__n%' ;
++------+---------+--------+
+| J#   | Jname   | City   |
++------+---------+--------+
+| J2   | Punch   | Rome   |
+| J4   | Console | Athens |
++------+---------+--------+
+2 rows in set (0.00 sec)
+
+
+7. Display all the Supplier names with the initial letter capital.
+
+d5_56353>SELECT CONCAT(UPPER(LEFT(sname,1)),RIGHT(sname,4)) FROM s;
++---------------------------------------------+
+| CONCAT(UPPER(LEFT(sname,1)),RIGHT(sname,4)) |
++---------------------------------------------+
+| Smith                                       |
+| Jones                                       |
+| Blake                                       |
+| Clark                                       |
+| Adams                                       |
++---------------------------------------------+
+5 rows in set (0.00 sec)
+
+d5_56353>SELECT sname FROM s WHERE sname LIKE 'UPPER()%';
+Empty set (0.00 sec)
+
+
+8. Display all the Supplier names in upper case.
+
+d5_56353>SELECT UPPER(sname) FROM s;
++--------------+
+| UPPER(sname) |
++--------------+
+| SMITH        |
+| JONES        |
+| BLAKE        |
+| CLARK        |
+| ADAMS        |
++--------------+
+5 rows in set (0.00 sec)
+
+
+9. Display all the Supplier names in lower case.
+
+d5_56353>SELECT LOWER(sname) FROM s;
++--------------+
+| LOWER(sname) |
++--------------+
+| smith        |
+| jones        |
+| blake        |
+| clark        |
+| adams        |
++--------------+
+5 rows in set (0.00 sec)
+
+
+10. Display the Supplier names and the lengths of the names.
+
+d5_56353>SELECT sname,LENGTH(sname) FROM s;
++-------+---------------+
+| sname | LENGTH(sname) |
++-------+---------------+
+| Smith |             5 |
+| Jones |             5 |
+| Blake |             5 |
+| Clark |             5 |
+| Adams |             5 |
++-------+---------------+
+5 rows in set (0.00 sec)
+
+
+11. Display the current day (e.g. Thursday).
+
+
+d5_56353>SELECT DAYNAME('2021-10-07');
++-----------------------+
+| DAYNAME('2021-10-07') |
++-----------------------+
+| Thursday              |
++-----------------------+
+1 row in set (0.00 sec)
+
+
+12. Display the minimum Status in the Supplier table.
+
+d5_56353>SELECT MIN(Status) FROM s;
++-------------+
+| MIN(Status) |
++-------------+
+|          10 |
++-------------+
+1 row in set (0.00 sec
+
+
+
+13. Display the maximum Weight in the Parts table.
+
+
+d5_56353>SELECT MAX(weight) FROM p;
++-------------+
+| MAX(weight) |
++-------------+
+|          19 |
++-------------+
+1 row in set (0.00 sec)
+
+
+
+14. Display the average Weight of the Parts
+
+d5_56353>SELECT AVG(weight) FROM p;
++-------------+
+| AVG(weight) |
++-------------+
+|     15.1667 |
++-------------+
+1 row in set (0.00 sec)
+
+
+15. Display the total Quantity sold for part ‘P1’.
+
+d5_56353>SELECT sum(qty) FROM sp WHERE `p#`='p1';
++----------+
+| sum(qty) |
++----------+
+|     1000 |
++----------+
+1 row in set (0.00 sec)
+
+
+16. Display all the Supplier names (with ‘la’ replaced by ‘ro’).
+d5_56353>SELECT REPLACE(sname,'la','ro') FROM s;
++--------------------------+
+| REPLACE(sname,'la','ro') |
++--------------------------+
+| Smith                    |
+| Jones                    |
+| Broke                    |
+| Crork                    |
+| Adams                    |
++--------------------------+
+5 rows in set (0.00 sec)
+
+
+
+
+17. Implement the above command such that ‘l’ is replaced with ‘r’ and ‘a’ is replaced with 'o'
+
+
+d5_56353>Select replace(replace(Sname, 'l','r'),'a','o') FROM S;
++------------------------------------------+
+| replace(replace(Sname, 'l','r'),'a','o') |
++------------------------------------------+
+| Smith                                    |
+| Jones                                    |
+| Broke                                    |
+| Crork                                    |
+| Adoms                                    |
++------------------------------------------+
+5 rows in set (0.00 sec)
+
+
+#############################################################
+
+Note: To solve below queries use “sales” database
+*Use Group by clause with appropriate sql functions to solve following queries.
+
+
+
+
+1. Write a query on the Customers table that will find the highest rating in each city. Put the 
+output in this form: For the city (city), the highest rating is: (rating)
+
+d5_56353>SELECT city,MAX(rating) FROM customers GROUP BY City;
++----------+-------------+
+| city     | MAX(rating) |
++----------+-------------+
+| London   |         100 |
+| Rome     |         200 |
+| San Jose |         300 |
+| Berlin   |         300 |
++----------+-------------+
+4 rows in set (0.00 sec)
+
+
+
+2. Write a query that totals the orders for each day and places the results in descending 
+order.
+
+d5_56353>SELECT odate, sum(amt) FROM orders GROUP BY odate ORDER BY SUM(amt) DESC;
++------------+----------+
+| odate      | sum(amt) |
++------------+----------+
+| 1990-10-04 | 16713.81 |
+| 1990-10-03 |  8944.59 |
++------------+----------+
+2 rows in set (0.00 sec)
+
+
+3. Write a query that selects the total amount in orders for each salesperson for whom this 
+total is greater than the amount of the largest order in the table.
+
+d5_56353>SELECT snum,SUM(amt) SUM from orders group by snum ORDER BY SUM DESC LIMIT 1;
++------+----------+
+| snum | SUM      |
++------+----------+
+| 1001 | 15382.07 |
++------+----------+
+1 row in set (0.00 sec)
+
+
+4. Write a query that selects the highest rating in each city.
+
+
+d5_56353>SELECT city, MAX(rating) FROM customers GROUP BY city;
++----------+-------------+
+| city     | MAX(rating) |
++----------+-------------+
+| London   |         100 |
+| Rome     |         200 |
+| San Jose |         300 |
+| Berlin   |         300 |
++----------+-------------+
+4 rows in set (0.00 sec)
+
+
+5. Largest order taken by each salesperson with order value more than Rs.3000.
+
+d5_56353>SELECT snum,MAX(amt) FROM orders GROUP By snum;
++------+----------+
+| snum | MAX(amt) |
++------+----------+
+| 1007 |  1098.16 |
+| 1001 |  9891.88 |
+| 1004 |  1900.10 |
+| 1002 |  5160.45 |
+| 1003 |  1713.23 |
++------+----------+
+5 rows in set (0.00 sec)
+
+d5_56353>SELECT snum,MAX(amt) FROM orders GROUP By snum HAVING MAX(amt)>3000;
++------+----------+
+| snum | MAX(amt) |
++------+----------+
+| 1001 |  9891.88 |
+| 1002 |  5160.45 |
++------+----------+
+2 rows in set (0.00 sec)
+
+d5_56353>
+
+d5_56353>SELECT manager_id,count(employee_id) FROM employees GROUP BY manager_id;
++------------+--------------------+
+| manager_id | count(employee_id) |
++------------+--------------------+
+|          0 |                  1 |
+|        100 |                 14 |
+|        101 |                  5 |
+|        102 |                  1 |
+|        103 |                  4 |
+|        108 |                  5 |
+|        114 |                  5 |
+|        120 |                  8 |
+|        121 |                  8 |
+|        122 |                  8 |
+|        123 |                  8 |
+|        124 |                  8 |
+|        145 |                  6 |
+|        146 |                  6 |
+|        147 |                  6 |
+|        148 |                  6 |
+|        149 |                  6 |
+|        201 |                  1 |
+|        205 |                  1 |
++------------+--------------------+
+19 rows in set (0.01 sec)
+
+
+
+7. Display the country ID and number of cities we have in the country
+
+
+
+
+d5_56353>SELECT country_id,COUNT(city) FROM locations GROUP BY country_id;
++------------+-------------+
+| country_id | COUNT(city) |
++------------+-------------+
+| "          |           1 |
+| AU         |           1 |
+| BR         |           1 |
+| CA         |           2 |
+| CH         |           2 |
+| CN         |           1 |
+| DE         |           1 |
+| IN         |           1 |
+| IT         |           2 |
+| JP         |           2 |
+| NL         |           1 |
+| Ox         |           1 |
+| SG         |           1 |
+| UK         |           2 |
+| US         |           4 |
++------------+-------------+
+15 rows in set (0.00 sec)
+
+
+8. Display average salary of employees in each department who have commission 
+percentage
+
+d5_56353>SELECT department_id, AVG(salary) FROM employees WHERE Commission_pct!=0.00 GROUP BY department_id;
++---------------+-------------+
+| department_id | AVG(salary) |
++---------------+-------------+
+|             0 | 7000.000000 |
+|            80 | 8955.882353 |
++---------------+-------------+
+2 rows in set (0.00 sec)
+
+
+9. Display job ID, number of employees, sum of salary, and difference between highest 
+salary and lowest salary of the employees of the job
+
+d5_56353>SELECT job_id,COUNT(employee_id) AS NO_OF_employees,SUM(salary), MAX(salary)-MIN(salary) AS Differece_between_salaries FROM employees GROUP BY job_id;
++------------+-----------------+-------------+----------------------------+
+| job_id     | NO_OF_employees | SUM(salary) | Differece_between_salaries |
++------------+-----------------+-------------+----------------------------+
+| AC_ACCOUNT |               1 |     8300.00 |                       0.00 |
+| AC_MGR     |               1 |    12000.00 |                       0.00 |
+| AD_ASST    |               1 |     4400.00 |                       0.00 |
+| AD_PRES    |               1 |    24000.00 |                       0.00 |
+| AD_VP      |               2 |    34000.00 |                       0.00 |
+| FI_ACCOUNT |               5 |    39600.00 |                    2100.00 |
+| FI_MGR     |               1 |    12000.00 |                       0.00 |
+| HR_REP     |               1 |     6500.00 |                       0.00 |
+| IT_PROG    |               5 |    28800.00 |                    4800.00 |
+| MK_MAN     |               1 |    13000.00 |                       0.00 |
+| MK_REP     |               1 |     6000.00 |                       0.00 |
+| PR_REP     |               1 |    10000.00 |                       0.00 |
+| PU_CLERK   |               5 |    13900.00 |                     600.00 |
+| PU_MAN     |               1 |    11000.00 |                       0.00 |
+| SA_MAN     |               5 |    61000.00 |                    3500.00 |
+| SA_REP     |              30 |   250500.00 |                    5400.00 |
+| SH_CLERK   |              20 |    64300.00 |                    1700.00 |
+| ST_CLERK   |              20 |    55700.00 |                    1500.00 |
+| ST_MAN     |               5 |    36400.00 |                    2400.00 |
++------------+-----------------+-------------+----------------------------+
+19 rows in set (0.00 sec)
+
+10. Display job ID for jobs with average salary more than 10000.
+
+d5_56353>SELECT job_id,AVG(salary) FROM employees GROUP BY job_id HAVING AVG(salary)> 10000;
++---------+--------------+
+| job_id  | AVG(salary)  |
++---------+--------------+
+| AC_MGR  | 12000.000000 |
+| AD_PRES | 24000.000000 |
+| AD_VP   | 17000.000000 |
+| FI_MGR  | 12000.000000 |
+| MK_MAN  | 13000.000000 |
+| PU_MAN  | 11000.000000 |
+| SA_MAN  | 12200.000000 |
++---------+--------------+
+7 rows in set (0.01 sec)
+
+
+11. Display years in which more than 10 employees joined.
+
+d5_56353>SELECT YEAR(HIRE_DATE) AS year,COUNT(HIRE_DATE) FROM employees  group by year;
++------+------------------+
+| year | COUNT(HIRE_DATE) |
++------+------------------+
+| 1987 |              107 |
++------+------------------+
+1 row in set (0.00 sec)
+
+
+12. Display departments in which more than five employees have commission percentage.
+d5_56353>SELECT department_id FROM employees WHERE commission_pct != 0 GROUP BY department_id HAVING COUNT(COMMISSION_PCT)>5;
++---------------+
+| department_id |
++---------------+
+|            80 |
++---------------+
+1 row in set (0.00 sec)
+
+
+13. Display employee ID for employees who did more than one job in the past.
+
+
+d5_56353>SELECT employee_id,count(employee_id) AS 'NO.OF Jobs'FROM job_history GROUP BY employee_id HAVING COUNT(employee_id)>1;
++-------------+------------+
+| employee_id | NO.OF Jobs |
++-------------+------------+
+|         101 |          2 |
+|         176 |          2 |
+|         200 |          2 |
++-------------+------------+
+3 rows in set (0.00 sec)
+
+14. Display job ID of jobs that were done by more than 3 employees for more than 100 
+days
+
+
+d5_56353>SELECT job_id FROM job_history WHERE end_date-start_date > 100 GROUP BY job_id HAVING COUNT(employee_id)>=3;
+Empty set (0.00 sec)
+
+
+
+15. Display department ID, year, and Number of employees joined.
+
+
+d5_56353>SELECT department_id,year(hire_date) YEAR ,COUNT(employee_id) 'NO. of employees'FROM employees GROUP BY department_ID,year(hire_date);
++---------------+------+------------------+
+| department_id | YEAR | NO. of employees |
++---------------+------+------------------+
+|            90 | 1987 |                3 |
+|            60 | 1987 |                5 |
+|           100 | 1987 |                6 |
+|            30 | 1987 |                6 |
+|            50 | 1987 |               45 |
+|            80 | 1987 |               34 |
+|             0 | 1987 |                1 |
+|            10 | 1987 |                1 |
+|            20 | 1987 |                2 |
+|            40 | 1987 |                1 |
+|            70 | 1987 |                1 |
+|           110 | 1987 |                2 |
++---------------+------+------------------+
+12 rows in set (0.00 sec)
+
+
+16. Display how many employees joined in each month of the current year
+
+d5_56353>SELECT MONTH(hire_date) AS MONTH, COUNT(employee_id) FROM employees GROUP BY  MONTH(hire_date);
++-------+--------------------+
+| MONTH | COUNT(employee_id) |
++-------+--------------------+
+|     6 |                 14 |
+|     7 |                 31 |
+|     8 |                 31 |
+|     9 |                 30 |
+|    10 |                  1 |
++-------+--------------------+
+5 rows in set (0.00 sec)
+
+
+17. Display details of departments in which the maximum salary is more than 10000.
+
+
+d5_56353>SELECT department_id,MAX(salary) FROM employees GROUP BY department_id HAVING MAX(salary)>10000;
++---------------+-------------+
+| department_id | MAX(salary) |
++---------------+-------------+
+|            20 |    13000.00 |
+|            30 |    11000.00 |
+|            80 |    14000.00 |
+|            90 |    24000.00 |
+|           100 |    12000.00 |
+|           110 |    12000.00 |
++---------------+-------------+
+6 rows in set (0.00 sec)
+
+d5_56353>SELECT department_id,department_name,manager_id,location_id FROM departments WHERE  department_id IN (20,30,80,90,100,110);
++---------------+-----------------+------------+-------------+
+| department_id | department_name | manager_id | location_id |
++---------------+-----------------+------------+-------------+
+|            20 | Marketing       |        201 |        1800 |
+|            30 | Purchasing      |        114 |        1700 |
+|            80 | Sales           |        145 |        2500 |
+|            90 | Executive       |        100 |        1700 |
+|           100 | Finance         |        108 |        1700 |
+|           110 | Accounting      |        205 |        1700 |
++---------------+-----------------+------------+-------------+
+6 rows in set (0.00 sec)
