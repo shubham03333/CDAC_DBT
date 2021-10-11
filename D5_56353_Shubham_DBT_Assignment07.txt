@@ -1,0 +1,244 @@
+Database Technologies – Assignment 7
+Sunbeam Institute of Information Technology, Pune & Karad.
+Note: To solve below queries use “sales” database
+*Use sub-query to solve following problems.
+
+
+
+1. Write a query that uses a subquery to obtain all orders for the customer named Cisneros. Assume you do not know his customer number ( cnum ).
+
+SELECT * FROM orders WHERE cnum=(SELECT cnum FROM customers WHERE cname='cisneros');
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
++------+---------+------------+------+------+
+2 rows in set (0.00 sec)
+
+
+
+2. Write a query that produces the names and ratings of all customers who have above average(amt) orders.
+
+
+SELECT c.cname,c.rating FROM customers c INNER JOIN orders o ON c.cnum=o.cnum WHERE o.amt > @avgamt;
++---------+--------+
+| cname   | rating |
++---------+--------+
+| Liu     |    200 |
+| Clemens |    100 |
+| Clemens |    100 |
++---------+--------+
+3 rows in set (0.34 sec)
+
+
+
+3. Write a query that selects the total amount in orders for each salesperson 
+for whom this total is greater than the amount of the largest order in the table.
+
+
+SELECT S.snum,SUM(o.amt)AS TOTALAMT FROM salespeople S INNER JOIN orders o ON s.snum=o.snum GROUP BY s.snum HAVING TOTALAMT > @MAXAMT;
++------+----------+
+| snum | TOTALAMT |
++------+----------+
+| 1001 | 15382.07 |
++------+----------+
+1 row in set (0.00 sec)
+
+
+
+
+4. Write a query that selects all customers whose ratings are equal to or 
+greater than ANY of ‘Serres’.
+
+SELECT cnum,cname FROM customers WHERE rating >= ANY
+    -> (SELECT c.rating FROM customers c INNER JOIN salespeople s ON c.snum=s.snum WHERE s.sname='serres');
++------+----------+
+| cnum | cname    |
++------+----------+
+| 2002 | Giovanni |
+| 2003 | Liu      |
+| 2004 | Grass    |
+| 2008 | Cisneros |
++------+----------+
+4 rows in set (0.00 sec)
+
+
+
+
+5. Write a query that will find all salespeople who have no customers located in 
+their city.
+
+
+
+SELECT s.Sname FROM salespeople s WHERE s.sname != ALL
+    -> (SELECT s.sname FROM customers c INNER JOIN salespeople s ON c.snum=s.snum WHERE c.city=s.city);
++---------+
+| Sname   |
++---------+
+| Motika  |
+| Rifkin  |
+| Axelrod |
++---------+
+3 rows in set (0.00 sec)
+
+
+6. Write a query that selects all orders for amounts greater than any for the 
+customers in London.
+
+
+SELECT o.onum,o.amt FROM orders o INNER JOIN customers c ON c.cnum=o.cnum WHERE o.amt > ANY(SELECT o.amt FROM customers c INNER JOIN orders o ON c.cnum=o.cnum WHERE c.city='london')AND c.city!='london';
++------+---------+
+| onum | amt     |
++------+---------+
+| 3002 | 1900.10 |
+| 3005 | 5160.45 |
+| 3006 | 1098.16 |
+| 3009 | 1713.23 |
++------+---------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+7. Extract all the orders of Motika.
+
+
+d5_56353>SELECT * FROM orders o INNER JOIN salespeople s ON o.snum=s.snum WHERE s.sname='motika';
++------+---------+------------+------+------+------+--------+--------+------+
+| onum | amt     | odate      | cnum | snum | snum | sname  | city   | comm |
++------+---------+------------+------+------+------+--------+--------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 | 1004 | Motika | London | 0.11 |
++------+---------+------------+------+------+------+--------+--------+------+
+1 row in set (0.00 sec)
+
+
+OTHER solN
+
+d5_56353>SELECT * FROM orders WHERE snum= (SELECT snum FROM salespeople WHERE sname='motika');
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
++------+---------+------------+------+------+
+1 row in set (0.00 sec)
+
+
+
+8. Find all the order attribute to salespeople servicing customers in London.
+
+SELECT * FROM orders WHERE snum= ANY(SELECT snum FROM customers WHERE city='london');
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3008 | 4723.00 | 1990-10-04 | 2006 | 1001 |
+| 3011 | 9891.88 | 1990-10-04 | 2006 | 1001 |
++------+---------+------------+------+------+
+3 rows in set (0.00 sec)
+
+
+
+
+9. Find names and numbers of all salesperson who have more than one 
+customer.
+
+
+
+d5_56353>SELECT s.snum,s.sname, COUNT(c.cnum) FROM customers c INNER JOIN salespeople s ON c.snum=s.snum GROUP BY c.snum,s.sname HAVING COUNT(c.cnum)>1 ;
++------+--------+---------------+
+| snum | sname  | COUNT(c.cnum) |
++------+--------+---------------+
+| 1001 | Peel   |             2 |
+| 1002 | Serres |             2 |
++------+--------+---------------+
+2 rows in set (0.01 sec)
+
+
+
+10. Find salespeople number, name and city who have multiple customers.
+
+
+d5_56353>SELECT s.snum,s.sname,s.city FROM customers c INNER JOIN salespeople s ON c.snum=s.snum GROUP BY c.snum,s.sname,s.city HAVING COUNT(c.cnum)>1 ;
++------+--------+----------+
+| snum | sname  | city     |
++------+--------+----------+
+| 1001 | Peel   | London   |
+| 1002 | Serres | San Jose |
++------+--------+----------+
+2 rows in set (0.00 sec)
+
+
+11. Select customers who have a greater rating than any other customer in 
+Rome.
+
+SELECT cnum,cname FROM customers WHERE rating > Any(SELECT rating FROM customers WHERE city='Rome');
++------+----------+
+| cnum | cname    |
++------+----------+
+| 2002 | Giovanni |
+| 2003 | Liu      |
+| 2004 | Grass    |
+| 2008 | Cisneros |
++------+----------+
+4 rows in set (0.00 sec)
+
+
+12. Select all orders that had amounts that were greater that atleast one of the 
+orders from ‘1990-10-04’.
+
+
+
+SELECT onum,amt FROM orders WHERE amt > ANY(SELECT amt FROM orders WHERE odate='1990-10-04') AND odate!='1990-10-04';
++------+---------+
+| onum | amt     |
++------+---------+
+| 3003 |  767.19 |
+| 3002 | 1900.10 |
+| 3005 | 5160.45 |
+| 3006 | 1098.16 |
++------+---------+
+4 rows in set (0.00 sec)
+
+
+
+
+13. Find all orders with amounts smaller than any amount for a customer in 
+San Jose.
+
+
+SELECT o.onum,o.amt FROM orders o INNER JOIN customers c ON c.cnum=o.cnum WHERE amt < ANY
+    -> (SELECT o.amt FROM customers c INNER JOIN ORDERS o ON c.cnum=o.cnum WHERE C.city='San jose') AND c.city!='San jose';
++------+---------+
+| onum | amt     |
++------+---------+
+| 3003 |  767.19 |
+| 3002 | 1900.10 |
+| 3009 | 1713.23 |
+| 3007 |   75.75 |
+| 3008 | 4723.00 |
+| 3010 |  309.95 |
++------+---------+
+6 rows in set (0.00 sec)
+
+
+14. Select those customers whose rating are higher than every customer in 
+Paris.
+
+
+SELECT cnum,cname FROM customers WHERE rating> ALL(
+    -> SELECT rating FROM customers WHERE city='paris');
++------+----------+
+| cnum | cname    |
++------+----------+
+| 2001 | Hoffman  |
+| 2002 | Giovanni |
+| 2003 | Liu      |
+| 2004 | Grass    |
+| 2006 | Clemens  |
+| 2008 | Cisneros |
+| 2007 | Pereira  |
++------+----------+
+7 rows in set (0.00 sec)
+
