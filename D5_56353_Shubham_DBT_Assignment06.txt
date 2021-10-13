@@ -59,7 +59,7 @@ d5_56353>SELECT c.cname,s.sname,s.comm FROM customers c INNER JOIN salespeople s
 on each order by a customer with a rating above 100.
 
 
-d5_56353>SELECT o.onum,s.comm*o.amt AS COMMISION,s.sname FROM orders o INNER JOIN salespeople s ON s.snum=o.snum INNER JOIN customers c ON c.snum=s.snum WHERE c.rating>100;
+d5_56353>SELECT DISTINCT o.onum,s.comm*o.amt AS COMMISION,s.sname FROM orders o INNER JOIN salespeople s ON s.snum=o.snum INNER JOIN customers c ON c.snum=s.snum WHERE c.rating>100;
 +------+-----------+---------+
 | onum | COMMISION | sname   |
 +------+-----------+---------+

@@ -1,0 +1,199 @@
+Note: To solve below queries use “sales” database
+Create appropriate indexes to solve following problems.
+
+1. Create an index that will enable a user to pull orders for ‘1990-10-03’ out of the Orders 
+table quickly.
+
+
+d5_56353>CREATE INDEX ind_ord_date ON orders(odate DESC);
+Query OK, 0 rows affected (1.82 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+d5_56353>SHOW INDEXES FROM orders;
++--------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table  | Non_unique | Key_name     | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++--------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| orders |          1 | ind_ord_date |            1 | odate       | D         |           2 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++--------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+1 row in set (0.14 sec)
+
+
+
+d5_56353>EXPLAIN FORMAT=JSON                             
+    -> SELECT odate FROM orders;
+ "query_cost": "1.25"
+
+2. If the Orders table has already been created, how can you force the onum field to be 
+unique (assume all current values are unique)?
+
+d5_56353>CREATE UNIQUE INDEX IND_onum ON orders(onum ASC);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+d5_56353>SHOW INDEXES FROM orders;
++--------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table  | Non_unique | Key_name     | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++--------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| orders |          0 | IND_onum     |            1 | onum        | A         |          10 |     NULL |   NULL | YES  | BTREE      |         |        
+       | YES     | NULL       |
+| orders |          1 | ind_ord_date |            1 | odate       | D         |           2 |     NULL |   NULL | YES  | BTREE      |         |        
+       | YES     | NULL       |
++--------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.36 sec)
+
+
+
+3. Create an index that would permit salesperson to retrieve his orders.
+
+
+
+d5_56353>CREATE INDEX IND_salp_onum ON orders(onum,snum);
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+d5_56353>SHOW  INDEXES FROM ORDERS;
++--------+------------+---------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table  | Non_unique | Key_name      | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++--------+------------+---------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| orders |          0 | IND_onum      |            1 | onum        | A         |          10 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| orders |          1 | ind_ord_date  |            1 | odate       | D         |           2 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| orders |          1 | IND_salp_onum |            1 | onum        | A         |          10 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| orders |          1 | IND_salp_onum |            2 | snum        | A         |          10 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++--------+------------+---------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+4 rows in set (0.02 sec)
+
+
+
+query_cost": "1.25"
+
+
+
+4. Create an index to speed up searching order on a given date by given customer.
+Note: use “sales” database to solve below queries
+Implement following constraints as given in question.
+
+d5_56353>EXPLAIN FORMAT=JSON 
+    -> SELECT onum,snum FROM orders ;
+
+ "query_cost": "1.35"
+
+CREATE INDEX IND_ord_date_cnum ON orders(onum,odate,cnum);  
+
+Query OK, 0 rows affected (0.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+d5_56353>EXPLAIN FORMAT=JSON
+    -> SELECT onum,odate,cnum FROM orders ;
+
+
+ "query_cost": "1.25"
+
+
+5. Write a SQL statement to add a primary key for the columns SNUM in the 
+SALESPEOPLE table.
+
+
+
+CREATE TABLE salespeople(snum int(4), sname varchar(10), city varchar(10), comm decimal(3,2));
+
+
+CREATE TABLE salespeople1(snum INT PRIMARY KEY,sname VARCHAR(10),city VARCHAR(10),comm DECIMAL(3.2));
+
+
+d5_56353>CREATE TABLE salespeople1(snum INT PRIMARY KEY,sname VARCHAR(10),city VARCHAR(10),comm DECIMAL(3.2));
+Query OK, 0 rows affected (0.21 sec)
+
+d5_56353>INSERT INTO salespeople1 VALUES(100,'shubham','Karad',0.9),(101,'Saurabh','Karad',0.8),(103,'Suraj','Bhiwandi',0.7);
+Query OK, 3 rows affected, 3 warnings (0.49 sec)
+Records: 3  Duplicates: 0  Warnings: 3
+
+d5_56353>DESCRIBE salespeople1;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| snum  | int          | NO   | PRI | NULL    |       |
+| sname | varchar(10)  | YES  |     | NULL    |       |
+| city  | varchar(10)  | YES  |     | NULL    |       |
+| comm  | decimal(3,0) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+
+
+d5_56353>SELECT * FROM salespeople1;
++------+---------+----------+------+
+| snum | sname   | city     | comm |
++------+---------+----------+------+
+|  100 | shubham | Karad    | 0.90 |
+|  101 | Saurabh | Karad    | 0.80 |
+|  103 | Suraj   | Bhiwandi | 0.70 |
++------+---------+----------+------+
+3 rows in set (0.00 sec)
+
+
+
+
+6. Write a SQL statement to add a primary key for the columns CNUM in the 
+CUSTOMERS table.
+
+CREATE TABLE customers(cnum INT PRIMARY KEY,cname VARCHAR(10),city VARCHAR(10),rating INT,snum INT);
+
+
+
+
+INSERT INTO customers VALUES(2001, 'Hoffman', 'London', 100, 1001);
+d5_56353>INSERT INTO customers VALUES(2002, 'Giovanni', 'Rome', 200, 1003);
+Query OK, 1 row affected (0.02 sec)
+
+d5_56353>INSERT INTO customers VALUES(2003, 'Liu', 'San Jose', 200, 1002);
+Query OK, 1 row affected (0.01 sec)
+
+d5_56353>INSERT INTO customers VALUES(2004, 'Grass', 'Berlin', 300, 1002);
+Query OK, 1 row affected (0.02 sec)
+
+d5_56353>INSERT INTO customers VALUES(2006, 'Clemens', 'London', 100, 1001);
+Query OK, 1 row affected (0.01 sec)
+
+d5_56353>INSERT INTO customers VALUES(2008, 'Cisneros', 'San Jose', 300, 1007);
+Query OK, 1 row affected (0.02 sec)
+
+d5_56353>INSERT INTO customers VALUES(2007, 'Pereira', 'Rome', 100, 1004);
+Query OK, 1 row affected (0.01 sec)
+
+d5_56353>DESCRIBE customers;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cnum   | int         | NO   | PRI | NULL    |       |
+| cname  | varchar(10) | YES  |     | NULL    |       |
+| city   | varchar(10) | YES  |     | NULL    |       |
+| rating | int         | YES  |     | NULL    |       |
+| snum   | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+
+
+
+7. Create DEPT table with deptno as Primary Key.
+
+CREATE TABLE DEPT(deptno INT PRIMARY KEY NOT NULL,Department_name VARCHAR(20) NOT NULL,Manager_id DECIMAL (6,0),Location_id DECIMAL(6,0) NOT NULL);
+
+
+
+INSERT INTO dept VALUES(10,'Administration',10,1000),(20,'HR',20,1001);
+
+
+d5_56353>DESCRIBE dept;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| deptno          | int          | NO   | PRI | NULL    |       |
+| Department_name | varchar(20)  | NO   |     | NULL    |       |
+| Manager_id      | decimal(6,0) | YES  |     | NULL    |       |
+| Location_id     | decimal(6,0) | NO   |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
