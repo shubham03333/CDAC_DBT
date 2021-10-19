@@ -1,0 +1,83 @@
+Note: use “classwork” database to solve below queries
+Use ALTER statement to solve following problems.
+
+1. Write a SQL statement to rename the table EMP to EMPLOYEE.
+
+ALTER TABLE emp RENAME TO employee;  
+Query OK, 0 rows affected (1.22 sec)
+
+
+2. Write a SQL statement to add a column region to the table DEPT.
+
+ALTER TABLE dept ADD region VARCHAR(15);
+Query OK, 0 rows affected (0.66 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+3. Write a SQL statement to add a dummy_ID as the first column of the table DUMMY.
+
+ALTER TABLE dummy ADD dummy_ID INT FIRST;              
+Query OK, 0 rows affected (0.30 sec)
+Records: 0  Duplicates: 0  Warnings: 
+
+
+
+4. Write a SQL statement to change the data type of the column sal to float in the table 
+EMP.
+
+ALTER TABLE employee MODIFY sal FLOAT;        
+Query OK, 19 rows affected (0.74 sec)
+Records: 19  Duplicates: 0  Warnings: 0
+
+
+
+
+5. Write a SQL statement to drop the column region from the table DEPT
+
+
+ALTER TABLE dept DROP region;
+Query OK, 0 rows affected (0.49 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+
+
+
+
+
+
+
+
+###################################################
+Database Technologies – Assignment 10
+Sunbeam Institute of Information Technology, Pune & Karad.
+PL-SQL
+1. Write a procedure that computes the perimeter and the area of a rectangle. Define 
+your own values for the length and width. (Assuming that L and W are the length 
+and width of the rectangle, Perimeter = 2*(L+W) and Area = L*W.
+
+
+
+2. Write a procedure that declares an integer variable called num, assigns a value to it, 
+and computes and inserts into the temp table the value of the variable itself, its 
+square, and its cube.
+
+
+
+
+3. Create a procedure to Convert a temperature in Fahrenheit (F) to its equivalent in 
+Celsius (C) and vice versa. The required formulae are:- C= (F-32)*5/9 F= 9/5*C + 
+32
+
+
+
+4. Create a procedure to Convert a number of inches into yards, feet, and inches. For 
+example, 124 inches equals 3 yards, 1 foot, and 4 inches.
+
+
+
+
+5. Create a procedure that takes department ID and changes the manager ID for the 
+department to the employee in the department with lowest salary
